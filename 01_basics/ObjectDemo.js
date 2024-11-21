@@ -58,3 +58,9 @@ console.log(userInfo.name.firstName);
 console.log(Object.keys(myObj)); // display each key in array format
 console.log(Object.values(myObj));// display each value in array format
 console.log(Object.entries(myObj));// display each key-value pair in array format
+
+console.log(myObj.hasOwnProperty("fullName"));
+
+const {fullName : name} = myObj // object destructure
+
+console.log(name);
