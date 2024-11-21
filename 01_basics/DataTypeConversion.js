@@ -12,5 +12,5 @@ console.log("Num 5 Type : ",typeof Number(num5) +", Value : ",Number(num5))
 console.log("Num 6 Type : ",typeof Number(num6) +", Value : ",Number(num6)) 
 
 let isLoggedIn = 12;
-
+        
 console.log("Num 6 Type : ",typeof Boolean(isLoggedIn) +", Value : ",Boolean(isLoggedIn)) 
