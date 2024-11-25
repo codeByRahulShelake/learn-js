@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Attribute</title>
+</head>
+<body style="background-color: #212121; color: #fff;">
+    
+</body>
+<script>
+    const myDiv = document.createElement('div')
+    console.log(myDiv)
+
+    myDiv.className = "main"
+    myDiv.id = "title"
+
+    myDiv.innerText = "Rahul Shelake"
+    myDiv.style.width = '40%'
+    myDiv.style.padding = '10px'
+    myDiv.style.textAlign = 'center'
+    myDiv.style.margin = 'auto'
+    myDiv.style.backgroundColor = 'white'
+    myDiv.style.color = 'black'
+    myDiv.style.border = '2 px solid orange'
+
+    document.body.appendChild(myDiv)
+</script>
+</html>
