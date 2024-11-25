@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+        select#country {
+          width: 200px; 
+          padding: 10px; 
+          border: 2px solid #007bff;
+          border-radius: 5px;
+          background-color: #f9f9f9; 
+          font-size: 16px; 
+          color: #333; 
+          cursor: pointer;
+        }
+        
+</style>
+</head>
+<body>
+    <select id="country" name="country">
+        <option value="australia">Australia</option>
+        <option value="canada">Canada</option>
+        <option value="usa">USA</option>
+    </select>
+
+</body>
+
+<script>
+    //edit
+    const first = document.querySelector('option:first-child')
+    first.innerHTML = "South Africa"
+
+    // second method
+    const newOption = document.createElement('option')
+    newOption.textContent = 'Chaina'
+    first.replaceWith(newOption)
+
+    // third method
+    newOption.outerHTML = '<option value="ind">India</option>';
+
+    //remove element
+    const last = document.querySelector('option:last-child')
+    last.remove()
+
+</script>
+</html>
