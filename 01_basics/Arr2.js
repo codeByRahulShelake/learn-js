@@ -14,7 +14,7 @@ console.log([...marvel_heroes,...dc_heroes])
 const arr3 = [1,2,3,[4,5],6,7,[8,9,10,[11,12,13]]]
 console.log(arr3) 
 
-console.log(arr3.flat(Infinity))
+console.log(arr3.flat(Infinity))  
 
 
 console.log(Array.from("Rahul"))
