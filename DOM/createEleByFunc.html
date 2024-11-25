@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Function</title>
+    <style>
+
+select#country {
+  width: 200px; 
+  padding: 10px; 
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  background-color: #f9f9f9; 
+  font-size: 16px; 
+  color: #333; 
+  cursor: pointer;
+}
+
+</style>
+</head>
+<body>
+    <select id="country" name="country">
+        <option value="australia">Australia</option>
+        <option value="canada">Canada</option>
+        <option value="usa">USA</option>
+      </select>
+</body>
+<script>
+    const addOption = (addText) => {
+        const myOption = document.createElement('option')
+        myOption.innerText = `${addText}`
+
+        document.querySelector('#country').appendChild(myOption)
+    }
+
+    addOption("India")
+    addOption('France')
+    
+
+
+</script>
+</html>
