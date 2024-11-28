@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Set Time Out</title>
+</head>
+<body>
+    <h1>Rahul Shelake</h1>
+    <button id="stop" style="width : 100px ; height : 50px; font-size: xx-large;">Stop</button>
+</body>
+<script>
+    const intervalId = setTimeout( () => {
+        document.querySelector('h1').innerHTML = "I am Rohan"
+    },3000)
+
+    document.querySelector('#stop').addEventListener('click', () => {
+        clearTimeout(intervalId)
+    })
+
+</script>
+</html>
