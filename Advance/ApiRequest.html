@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Request</title>
+</head>
+<style>
+    table {
+    width: 60%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    text-align: left;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
+}
+
+img {
+    display: block;
+    margin: 0 auto;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+</style>
+<body>
+    
+</body>
+<script>
+    let dataRequest = new XMLHttpRequest()
+    let requestUrl = 'https://api.github.com/users/codeByRahulShelake'
+    dataRequest.open('GET', requestUrl)
+    dataRequest.send()
+
+    dataRequest.onreadystatechange = function(){
+        if(dataRequest.readyState === 4)
+        {
+            let data = JSON.parse(this.responseText)
+
+            document.body.innerHTML = `
+            <table>
+            <tr>
+                <th>Attribute</th>
+                <th>Value</th>
+            </tr>
+            <tr>
+                <td>User Name</td>
+                <td>${data.name}</td>
+            </tr>
+            <tr>
+                <td>User Image</td>
+                <td><img src="${data.avatar_url}" alt="Profile Image" width="150" height="150"></td>
+            </tr>
+            <tr>
+                <td>User location</td>
+                <td>${data.location}</td>
+            </tr>
+            <tr>
+                <td>User bio</td>
+                <td>${data.bio}</td>
+            </tr>
+            <tr>
+                <td>Total Repositories</td>
+                <td>${data.public_repos}</td>
+            </tr>
+            <tr>
+                <td>User following</td>
+                <td>${data.following}</td>
+            </tr>
+            <tr>
+                <td>User followers</td>
+                <td>${data.followers}</td>
+            </tr>
+            </table>
+            
+            `
+        }
+    }
+
+</script>
+</html>
