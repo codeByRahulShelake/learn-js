@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2>Click on start to change the background color countinuosly </h1>
+    <h2>And Stop to stop the color changer</h1>\
+
+    <button id="start" style="width : 60px ; height : 40px; font-size: 20px;">Start</button>
+
+    <button id="stop" style="width : 60px ; height : 40px; font-size: 20px;">Stop</button>
+    
+</body>
+<script>
+    let randomColor = () => {
+        const hex = '0123456789ABCDEF'
+        let color = '#'
+        for(let i = 0 ; i < 6 ; i++)
+        {
+            color += hex[Math.floor(Math.random() * 16)]
+        }
+
+        return color;
+    }
+
+    let intervalId
+    function changeColor() {
+        if(!intervalId)
+        {
+            intervalId = setInterval(() => {
+                bgColorChanger()
+            },1000)
+        }
+
+        function bgColorChanger() {
+            document.body.style.backgroundColor = randomColor();
+        }
+    }
+
+    function stopColor() {
+        clearInterval(intervalId)
+        intervalId = null
+    }
+
+    document.querySelector('#start').addEventListener('click', () => {
+        changeColor()
+    })
+
+    document.querySelector('#stop').addEventListener('click', () => {
+        stopColor()
+    })
+
+
+</script>
+</html>
