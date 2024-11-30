@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #4c4fef, #34c3ff);
+            color: #333;
+        }
+
+       
+        .calculator {
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            text-align: center;
+        }
+
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #4c4fef;
+            outline: none;
+        }
+
+        
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background-color: #4c4fef;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background-color: #34c3ff;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        
+        p {
+            font-size: 16px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        .result {
+            margin-top: 10px;
+            font-size: 18px;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <label for="num1">1st Number:</label>
+        <input type="number" class="num1" placeholder="Enter first number">
+
+        <label for="num2">2nd Number:</label>
+        <input type="number" class="num2" placeholder="Enter second number">
+
+        <div class="buttons">
+            <button class="multi">Multiply</button>
+            <button class="divide">Divide</button>
+        </div>
+
+        <p>The Result Is:</p>
+        <p class="result">0</p>
+    </div>
+</body>
+<script>
+  
+    const multiplyBtn = document.querySelector('.multi');
+    const divideBtn = document.querySelector('.divide');
+    const resultDisplay = document.querySelector('.result');
+
+    // Function to multiply the numbers
+    function multiplyNumbers() {
+        const num1 = parseFloat(document.querySelector('.num1').value);
+        const num2 = parseFloat(document.querySelector('.num2').value);
+
+        if (isNaN(num1) || isNaN(num2)) {
+            resultDisplay.textContent = "Please enter valid numbers!";
+        } else {
+            resultDisplay.textContent = num1 * num2;
+        }
+    }
+
+    // Function to divide the numbers
+    function divideNumbers() {
+        const num1 = parseFloat(document.querySelector('.num1').value);
+        const num2 = parseFloat(document.querySelector('.num2').value);
+
+        if (isNaN(num1) || isNaN(num2)) {
+            resultDisplay.textContent = "Please enter valid numbers!";
+        } else if (num2 === 0) {
+            resultDisplay.textContent = "Division by zero is not allowed!";
+        } else {
+            resultDisplay.textContent = num1 / num2;
+        }
+    }
+
+    // Attach event listeners to the buttons
+    multiplyBtn.addEventListener('click', multiplyNumbers);
+    divideBtn.addEventListener('click', divideNumbers);
+</script>
+
+</html>
