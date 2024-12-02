@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City Weather Search</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-size: 16px;
+            color: #555;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: #66afe9;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            font-size: 16px;
+            color: white;
+            background-color: #28a745;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        #weather-info {
+            margin-top: 20px;
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            color: #333;
+            font-size: 16px;
+            display: none;
+        }
+
+        .error-message {
+            color: red;
+            font-weight: bold;
+        }
+
+        .success-message {
+            color: green;
+            font-weight: bold;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Search City Weather</h2>
+        <form id="city-form">
+            <div class="input-group">
+                <label for="city-name">Enter City Name:</label>
+                <input type="text" id="city-name" name="city-name" required placeholder="e.g., New York">
+            </div>
+            <button type="submit">Get Weather</button>
+        </form>
+
+        <div id="weather-info"></div>
+    </div>
+
+    <script>
+        // Function to fetch weather data from OpenWeatherMap API
+        function getCityWeather(cityName) {
+            const apiKey = "3c723d02147517b1cbc3315b6d3a7062"; // Replace with your OpenWeatherMap API key
+            const url = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=metric`;
+
+            // Fetch weather data for the city
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const weatherInfoDiv = document.getElementById("weather-info");
+                    if (data.cod === 200) {
+                        // Display weather info if the city is found
+                        const weatherInfo = `
+                            <h3 class="success-message">Weather in ${data.name}, ${data.sys.country}</h3>
+                            <p><strong>Temperature:</strong> ${data.main.temp} °C</p>
+                            <p><strong>Weather:</strong> ${data.weather[0].description}</p>
+                            <p><strong>Humidity:</strong> ${data.main.humidity}%</p>
+                            <p><strong>Wind Speed:</strong> ${data.wind.speed} m/s</p>
+                        `;
+                        weatherInfoDiv.innerHTML = weatherInfo;
+                        weatherInfoDiv.style.display = 'block'; // Show the weather info
+                    } else {
+                        // If city is not found
+                        weatherInfoDiv.innerHTML = `<p class="error-message">City not found!</p>`;
+                        weatherInfoDiv.style.display = 'block'; // Show the error message
+                    }
+                })
+                .catch(error => {
+                    const weatherInfoDiv = document.getElementById("weather-info");
+                    weatherInfoDiv.innerHTML = `<p class="error-message">Error fetching weather data!</p>`;
+                    weatherInfoDiv.style.display = 'block'; // Show the error message
+                    console.error('Error:', error);
+                });
+        }
+
+        // Event listener for the form submission
+        document.getElementById("city-form").addEventListener("submit", function(event) {
+            event.preventDefault(); // Prevent page reload
+            const cityName = document.getElementById("city-name").value;
+            getCityWeather(cityName); // Call the function to get the weather
+        });
+    </script>
+
+</body>
+</html>
