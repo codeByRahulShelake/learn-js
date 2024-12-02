@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        body {
+            font-family: Verdana, Geneva, sans-serif;
+            background-color: #e8f1f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .todo-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            width: 650px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 2rem;
+            color: #333;
+        }
+
+        input {
+            width: 90%;
+            padding: 14px;
+            margin-bottom: 20px;
+            border-radius: 6px;
+            border: 1px solid #bbb;
+            font-size: 16px; 
+            outline: none;
+            transition: border-color 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            border-color: #007bff;
+        }
+
+        button {
+            width: 90%;
+            padding: 14px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px; 
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li.completed {
+            text-decoration: line-through;
+            color: #666;
+        }
+
+        li {
+            background-color: #fdfdfd;
+            padding: 10px;
+            margin-bottom: 15px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            word-break: break-word;
+            width: 100%;
+            position: relative;
+        }
+
+        .task-text {
+            flex-grow: 1;
+            padding-right: 15px;
+            white-space: normal; 
+            word-wrap: break-word; 
+            text-align: left;
+        }
+
+
+        .status-box {
+            background-color: #f0ad4e;
+            color: white;
+            padding: 8px 18px; 
+            border-radius: 4px;
+            font-size: 14px; 
+            font-weight: 500;
+            display: inline-block;
+            width: 115px;
+            text-align: center;
+            cursor: pointer;
+            margin-right: 15px; 
+            flex-shrink: 0;
+            box-sizing: border-box;
+        }
+
+        .status-box :hover {
+            background-color: #c82333;
+            
+
+        }
+
+        .status-box:active {
+            transform: scale(0.95);
+        }
+
+        .delete-btn {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            flex-shrink: 0;
+            width: 70px; 
+            text-align: center;
+        }
+
+        .delete-btn:hover {
+            background-color: #c82333;
+        }
+
+        .delete-btn:active {
+            transform: scale(0.95);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="todo-container">
+        <h1>My To-Do List</h1>
+        <input type="text" class="task-input" placeholder="Enter a task" />
+        <button class="add-btn">Add Task</button>
+        
+        <ul class="todo-list"></ul>
+    </div>
+
+    <script>
+        document.querySelector('.add-btn').addEventListener('click', () => {
+        let inputField = document.querySelector('.task-input');
+        const task = inputField.value;
+        if (task !== '') {
+            let todoList = document.querySelector('.todo-list');
+
+            // Create the list item
+            let newLi = document.createElement('li');
+
+            // Create the status box
+            let newStatus = document.createElement('div');
+            newStatus.className = 'status-box';
+            newStatus.innerText = 'Pending';
+
+            // Create the delete button
+            let newTaskEle = document.createElement('button');
+            newTaskEle.className = 'delete-btn';
+            newTaskEle.innerText = 'Delete';
+
+            // Add task text
+            let newTaskText = document.createElement('span');
+            newTaskText.className = 'task-text';
+            newTaskText.innerText = task;
+
+            // Append all elements to the list item
+            newLi.appendChild(newTaskText);
+            newLi.appendChild(newStatus);  
+            newLi.appendChild(newTaskEle);
+
+            // Append the list item to the todo list
+            todoList.appendChild(newLi);
+
+            // Store the task in localStorage
+            storeTasksInLocalStorage();
+
+            // Clear the input field
+            inputField.value = '';
+        }
+    });
+
+    // Store tasks in localStorage
+    function storeTasksInLocalStorage() {
+        let todoList = document.querySelector('.todo-list');
+        let tasks = [];
+
+        // Loop through each task in the list and push its details into the tasks array
+        todoList.querySelectorAll('li').forEach(taskItem => {
+            let taskText = taskItem.querySelector('.task-text').innerText;
+            let taskStatus = taskItem.querySelector('.status-box').innerText;
+
+            tasks.push({
+                taskText: taskText,
+                taskStatus: taskStatus
+            });
+        });
+
+        // Save the tasks array to localStorage as a JSON string
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
+    // Load tasks from localStorage when the page loads
+    window.addEventListener('load', () => {
+        let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+        tasks.forEach(task => {
+            let todoList = document.querySelector('.todo-list');
+
+            // Create the list item
+            let newLi = document.createElement('li');
+
+            // Create the status box
+            let newStatus = document.createElement('div');
+            newStatus.className = 'status-box';
+            newStatus.innerText = task.taskStatus;
+
+            // Create the delete button
+            let newTaskEle = document.createElement('button');
+            newTaskEle.className = 'delete-btn';
+            newTaskEle.innerText = 'Delete';
+
+            // Add task text
+            let newTaskText = document.createElement('span');
+            newTaskText.className = 'task-text';
+            newTaskText.innerText = task.taskText;
+
+            // Append all elements to the list item
+            newLi.appendChild(newTaskText);
+            newLi.appendChild(newStatus);  // Status button in between task and delete button
+            newLi.appendChild(newTaskEle);
+
+            // Append the list item to the todo list
+            todoList.appendChild(newLi);
+        });
+    });
+
+    // Delete and change the status when clicked
+    document.querySelector('.todo-list').addEventListener('click', (e) => {
+        console.log(e.target.tagName);
+        if (e.target.tagName === 'BUTTON') {
+            let taskItem = e.target.parentNode;
+            taskItem.remove();
+
+            // Update localStorage after deletion
+            storeTasksInLocalStorage();
+        }
+        if(e.target.tagName === 'DIV')
+        {
+            let status = e.target
+            status.innerText = 'Completed'
+
+            // Update localStorage after status change
+            storeTasksInLocalStorage();
+        }
+    });
+
+
+    </script>
+</body>
+</html>
