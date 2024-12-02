@@ -25,13 +25,14 @@ function getCityWeather(city){
             document.querySelector('.cityName').innerHTML = `${city} City Weather`
             document.querySelector('.temp').innerHTML = `${data.list[0].main.temp} °C`
             document.querySelector('.description').innerHTML = `${data.list[0].weather[0].description}`
-            document.querySelector('.windHumidity').innerHTML = `Humidity: ${data.list[0].main.humidity}% | Wind Speed: ${data.list[0].wind.speed * 3.6} km/h`
+            let wind = (data.list[0].wind.speed * 3.6).toFixed(2);
+            document.querySelector('.windHumidity').innerHTML = `Humidity: ${data.list[0].main.humidity}% | Wind Speed: ${wind} km/h`
 
             let sumHumidity = 0
             let intervalCount = 0
             let days = 0
             
-            // Select all elements with class "day" within the "forecast" div
+        // Select all elements with class "day" within the "forecast" div
         const newDays = document.querySelectorAll('.forecast .day');
 
         // Loop through and remove each "day" element

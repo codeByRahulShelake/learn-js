@@ -7,109 +7,210 @@
     <!-- Font Awesome CSS for stylish icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
     <style>
+        /* General Styles */
         body {
-            font-family: 'Arial', sans-serif;
-            margin: 0;
-            background-color: #f4f7f6;
-        }
+    font-family: Arial, sans-serif;
+    background-color: #333;
+    color: white;
+    margin: 0;
+    padding: 0;
+}
 
-        .container {
-            max-width: 1000px;
-            margin: 40px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #444;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
 
-        h1 {
-            font-size: 24px;
-            color: #333;
-        }
+h1 {
+    font-size: 26px;
+    color: #fff;
+    margin: 0;
+}
 
-        .city-input {
-            padding: 8px 12px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
+.city-input {
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #555;
+    color: white;
+    width: 200px;
+    transition: border-color 0.3s ease;
+}
 
-        .weather-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 20px;
-        }
+.city-input:focus {
+    border-color: #66ccff; /* Focus state border color */
+    outline: none;
+}
 
-        .weather-info .temp {
-            font-size: 48px;
-            font-weight: bold;
-            color: #333;
-        }
+.weather-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
 
-        .weather-info .description {
-            font-size: 18px;
-            color: #555;
-            margin-top: 10px;
-        }
+.weather-info .temp {
+    font-size: 56px;
+    font-weight: bold;
+    color: #fff;
+    margin-right: 20px;
+}
 
-        .weather-info .graph {
-            width: 50%;
-            height: 150px;
-            background: linear-gradient(to right, #66ccff, #99ccff);
-            border-radius: 8px;
-            margin-left: 20px;
-            position: relative;
-        }
+.weather-info .description {
+    font-size: 18px;
+    color: #ccc;
+    margin-top: 10px;
+}
 
-        .forecast {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
+.weather-info .graph {
+    width: 100%;
+    height: 150px;
+    background: linear-gradient(to right, #66ccff, #99ccff);
+    border-radius: 8px;
+    margin-left: 20px;
+    position: relative;
+}
 
-        .forecast .day {
-            text-align: center;
-            padding: 10px;
-        }
+.weather-container {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
 
-        .forecast .day i {
-            font-size: 80px;
-            color: #007bff;
-        }
+.weather-hour {
+    text-align: center;
+    background-color: #555;
+    border-radius: 10px;
+    padding: 10px;
+    width: 90px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
 
-        .forecast .day p {
-            font-size: 14px;
-            color: #777;
-            margin-bottom: 20px;
-        }
+.weather-hour:hover {
+    background-color: #444;
+    transform: scale(1.05); /* Slightly enlarge on hover */
+}
 
-        .forecast .day .humidity {
-            margin-top: 20px;
-            font-size: 14px;
-            color: #555;
-        }
+.weather-hour p {
+    margin: 5px 0;
+    font-size: 16px;
+}
 
-        footer {
-            text-align: center;
-            font-size: 14px;
-            color: #777;
-            margin-top: 40px;
-        }
+.weather-hour p:first-child {
+    font-weight: bold;
+}
 
-        .forecast .day:hover {
-            background-color: #80d4ff ;  /* Change to your desired background color */
-            cursor: pointer;  /* Optional: Changes the cursor to a pointer */
-            transition: background-color 0.3s ease;  /* Smooth transition effect */
-        }
+.weather-hour p:last-child {
+    font-size: 18px;
+    font-weight: bold;
+}
 
+.weather-hour i {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #FFD700; /* Golden color for icons */
+}
+
+.weather-hour i.fas {
+    transition: color 0.3s ease; /* Smooth transition for icon color */
+}
+
+.weather-hour:hover i.fas {
+    color: #ffcc00; /* Slightly lighter yellow on hover */
+}
+
+/* Update the forecast container to display items horizontally */
+.forecast {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    flex-wrap: nowrap; /* Prevent wrapping */
+}
+
+/* Ensure the individual forecast day elements are displayed in a row */
+.forecast .day {
+    text-align: center;
+    padding: 15px;
+    margin-right: 20px; /* Add space between forecast days */
+    background-color: #555;
+    border-radius: 10px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    flex: 1; /* Allow flexible width for each forecast day */
+}
+
+.forecast .day:hover {
+    background-color: #444;
+    transform: scale(1.05);
+}
+
+
+.forecast .day i {
+    font-size: 80px;
+    color: #007bff;
+    transition: color 0.3s ease; /* Smooth transition for icon color */
+}
+
+.forecast .day:hover i {
+    color: #ffcc00; /* Change icon color on hover */
+}
+
+.forecast .day p {
+    font-size: 14px;
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.forecast .day .humidity {
+    font-size: 14px;
+    color: #fff;
+}
+
+
+footer {
+    text-align: center;
+    font-size: 14px;
+    color: #777;
+    margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+    .weather-info {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .weather-info .temp {
+        font-size: 48px;
+        margin-right: 0;
+    }
+
+    .weather-container {
+        flex-direction: column;
+    }
+
+    .weather-hour {
+        width: 120px;
+        margin: 10px;
+    }
+
+    
+}
 
     </style>
 </head>
@@ -150,7 +251,53 @@
                 </div>
             </div>
         </div>
-
+        
+        <!-- Hourly Forecast -->
+        <div class="weather-container">
+            <div class="weather-hour">
+                <p>12 AM to 3 AM</p>
+                <i class="fas fa-cloud-moon"></i> <!-- Cloudy moon for night -->
+                <p>75°F</p>
+            </div>
+            <div class="weather-hour">
+                <p>3 AM to 6 AM</p>
+                <i class="fas fa-cloud-moon"></i> <!-- Cloudy moon for night -->
+                <p>74°F</p>
+            </div>
+            <div class="weather-hour">
+                <p>6 AM to 9 AM</p>
+                <i class="fas fa-cloud-sun"></i> <!-- Cloudy sun for morning -->
+                
+                <p>72°F</p>
+            </div>
+            <div class="weather-hour">
+                <p>9 AM to 12 PM</p>
+                <i class="fas fa-sun"></i> <!-- Moon icon for morning -->
+                <p>71°F</p>
+            </div>
+            <div class="weather-hour">
+                <p>12 AM to 3 PM</p>
+                <i class="fas fa-cloud-sun"></i> <!-- Cloudy sun for afternoon -->
+                <p>70°F</p>
+            </div>
+            <div class="weather-hour">
+                <p>3 PM to 6 PM</p>
+                <i class="fas fa-sun"></i> <!-- Sun icon for noon -->
+                <p>69°F</p>
+            </div>
+            <div class="weather-hour">
+                <p>6 PM to 9 PM</p>
+                <i class="fas fa-cloud"></i> <!-- Cloud icon for evening -->
+                <p>68°F</p>
+            </div>
+            <div class="weather-hour">
+                <p>9 PM to 12 AM</p>
+                <i class="fas fa-cloud-moon"></i> <!-- Cloudy moon for night -->
+                <p>72°F</p>
+            </div>
+            
+            
+        </div>
         
 
         <footer>
