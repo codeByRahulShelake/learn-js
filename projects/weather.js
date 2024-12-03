@@ -295,12 +295,10 @@ weatherHourForecast.addEventListener('click', (e) => {
     // Check if the clicked element is a <P> or <I> tag
     if (e.target.tagName === 'P' || e.target.tagName === 'I') {
         let clickedDiv = e.target.parentNode;
-        console.log(clickedDiv);
 
         // Access the first <p> element inside .day to get the date
         const dateElement = clickedDiv.querySelector('p:first-child');
         clickedDate = dateElement.textContent;
-        console.log(clickedDate);  // Logs the clicked date
     }
     
     // If the clicked element is a <DIV>
@@ -311,7 +309,6 @@ weatherHourForecast.addEventListener('click', (e) => {
         // Access the first <p> element inside .day to get the date
         const dateElement = clickedDiv.querySelector('p:first-child');
         clickedDate = dateElement.textContent;
-        console.log(clickedDate);  // Logs the clicked date
     }
 
     if(clickedDate === 'Today')
@@ -407,7 +404,7 @@ function showPosition(position) {
     const longitude = position.coords.longitude;
     const coords = `${latitude}, ${longitude}`;
 
-    // Log coordinates to console for debugging
+    // Log coordinates to console 
     console.log('Coordinates:', coords);
 
     // Now, we will use a reverse geocoding API to convert coordinates into a city name
@@ -417,10 +414,10 @@ function showPosition(position) {
 
 // Function to reverse geocode the latitude and longitude to get city name
 function reverseGeocode(latitude, longitude) {
-    const apiKey = '13c78181b46141b49f68d6e4fcf4385c'; // Replace with your geocoding API key (OpenCage, Google Maps, etc.)
+    const apiKey = '13c78181b46141b49f68d6e4fcf4385c'; //api key
     const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}&language=en&pretty=1`;
 
-    // Log URL for debugging
+    // Log URL
     console.log('Request URL:', url);
 
     fetch(url)
