@@ -23,6 +23,7 @@
     background-color: #444;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+
 }
 
 header {
@@ -50,7 +51,7 @@ h1 {
 }
 
 .city-input:focus {
-    border-color: #66ccff; /* Focus state border color */
+    border-color: #66ccff;
     outline: none;
 }
 
@@ -86,10 +87,12 @@ h1 {
 
 .weather-container {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
-    margin-top: 30px;
-    flex-wrap: wrap;
+    margin-top: 20px;
+    gap: 20px;
+    flex-wrap: nowrap;
+    overflow-x: auto;
 }
 
 .weather-hour {
@@ -97,13 +100,13 @@ h1 {
     background-color: #555;
     border-radius: 10px;
     padding: 10px;
-    width: 90px;
+    width: 80px;
     transition: background-color 0.3s ease, transform 0.3s ease;
+    flex: 0 0 auto;
 }
 
 .weather-hour:hover {
     background-color: #444;
-    transform: scale(1.05); /* Slightly enlarge on hover */
 }
 
 .weather-hour p {
@@ -123,35 +126,33 @@ h1 {
 .weather-hour i {
     font-size: 24px;
     margin-bottom: 10px;
-    color: #FFD700; /* Golden color for icons */
+    color: #FFD700;
 }
 
 .weather-hour i.fas {
-    transition: color 0.3s ease; /* Smooth transition for icon color */
+    transition: color 0.3s ease;
 }
 
 .weather-hour:hover i.fas {
-    color: #ffcc00; /* Slightly lighter yellow on hover */
+    color: #ffcc00;
 }
 
-/* Update the forecast container to display items horizontally */
 .forecast {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-top: 20px;
-    flex-wrap: nowrap; /* Prevent wrapping */
+    flex-wrap: nowrap;
 }
 
-/* Ensure the individual forecast day elements are displayed in a row */
 .forecast .day {
     text-align: center;
     padding: 15px;
-    margin-right: 20px; /* Add space between forecast days */
+    margin-right: 20px;
     background-color: #555;
     border-radius: 10px;
     transition: background-color 0.3s ease, transform 0.3s ease;
-    flex: 1; /* Allow flexible width for each forecast day */
+    flex: 1;
 }
 
 .forecast .day:hover {
@@ -159,15 +160,14 @@ h1 {
     transform: scale(1.05);
 }
 
-
 .forecast .day i {
     font-size: 80px;
     color: #007bff;
-    transition: color 0.3s ease; /* Smooth transition for icon color */
+    transition: color 0.3s ease;
 }
 
 .forecast .day:hover i {
-    color: #ffcc00; /* Change icon color on hover */
+    color: #ffcc00;
 }
 
 .forecast .day p {
@@ -181,7 +181,6 @@ h1 {
     color: #fff;
 }
 
-
 footer {
     text-align: center;
     font-size: 14px;
@@ -189,27 +188,58 @@ footer {
     margin-top: 40px;
 }
 
+/* Responsive Media Queries */
 @media (max-width: 768px) {
+    h1 {
+        font-size: 20px;
+    }
+
+    .city-input {
+        width: calc(100% - 40px);
+        margin-top: 10px;
+    }
+
     .weather-info {
         flex-direction: column;
         align-items: center;
     }
 
-    .weather-info .temp {
-        font-size: 48px;
-        margin-right: 0;
+    .temp {
+        font-size: 40px;
+    }
+
+    .forecast .day {
+        flex: 1 1 100%;
     }
 
     .weather-container {
         flex-direction: column;
+        align-items: center;
     }
 
     .weather-hour {
-        width: 120px;
-        margin: 10px;
+        width: 90%;
+        margin: 10px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    header {
+        flex-direction: column;
+        align-items: center;
     }
 
-    
+    .city-input {
+        max-width: 90%;
+    }
+
+    .forecast {
+        flex-direction: column;
+    }
+
+    .forecast .day {
+        margin-bottom: 15px;
+    }
 }
 
     </style>
@@ -221,7 +251,7 @@ footer {
             <h1 class="cityName"></h1>
             <input class="city-input" type="text" placeholder="Enter City" />
         </header>
-        <h2 class="city-time">Time</h2>
+        <h2 class="city-time"></h2>
 
         <div class="weather-info">
             <div class="main-weather">

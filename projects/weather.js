@@ -9,9 +9,9 @@ inputValue.addEventListener('change',(event) => {
     getCityWeather(city)
 })
 let weatherCity 
-function getCityWeather(city){
+function getCityWeather(city = 'Pune'){
     weatherCity = city
-    const apiKey = "Your_API_Key"; // api key
+    const apiKey = "3c723d02147517b1cbc3315b6d3a7062"; // api key
     const url = `http://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`;
 
     let today = new Date()
@@ -26,7 +26,11 @@ function getCityWeather(city){
             document.querySelector('.description').innerHTML = `${data.list[0].weather[0].description}`
             let wind = (data.list[0].wind.speed * 3.6).toFixed(2);
             document.querySelector('.windHumidity').innerHTML = `Humidity: ${data.list[0].main.humidity}% | Wind Speed: ${wind} km/h`
-            getCityTime(city)
+            
+            setInterval(() => {
+                getCityTime(city)
+            },1000)
+            
 
             // Select all elements with class "day" within the "forecast" div
             const newHours = document.querySelectorAll('.weather-container .weather-hour');
@@ -47,19 +51,32 @@ function getCityWeather(city){
                     let secondTime = time +3
                     let weather = `${element.main.temp} °C`
                     if(time > 12)
-                    { 
-                        time = (time - 12)+' PM'
-                    }
-                    else{
-                        time = (time)+' AM'
-                    }
-                    if(secondTime > 12)
-                    {
-                        secondTime = (secondTime - 12)+' PM'
-                    }
-                    else{
-                       secondTime = (secondTime)+' AM'
-                    }
+                        { 
+                            time = (time - 12)+' PM'
+                        }else{
+                            if (time == 12)
+                                time = 12 +' PM'
+                            else if(time == 0)
+                                time = 12 +' AM'
+                            else
+                                time = (time)+' AM'
+                            
+                            if(time == 0)
+                                time = 12 +' AM'
+                        }
+                        if(secondTime > 12)
+                        {
+                            if (secondTime == 24)
+                                secondTime = 12 +' AM'
+                            else
+                                secondTime = (secondTime - 12)+' PM'
+                        }
+                        else{
+                            if (secondTime == 12)
+                                secondTime = 12 +' PM'
+                            else
+                            secondTime = (secondTime)+' AM'
+                        }
 
                     newDiv.innerHTML = `
                         <p>${time} to ${secondTime}</p>
@@ -124,6 +141,7 @@ function getCityWeather(city){
         } else {
             // If city is not found
             alert(`${city} City not found`);
+            console.log(city);
         }
     })
     .catch(error => {
@@ -132,19 +150,39 @@ function getCityWeather(city){
             
 }
 
-function getCityTime(city) {
-    const apiKey = '3c723d02147517b1cbc3315b6d3a7062';
-    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+async function getCityTime(city) {
+    const geocodingApiKey = '13c78181b46141b49f68d6e4fcf4385c';
+    const timezoneApiKey = 'FBT7Y0FQ7NRW';
 
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            const offset = data.timezone; // Timezone offset in seconds
-            const cityTime = new Date((data.dt + offset) * 1000);
-            document.querySelector('.city-time').innerHTML = `Current time in ${city}: ${cityTime.toLocaleTimeString()}`;
-        })
-        .catch(error => console.error('Error:', error));
+    const geocodingUrl = `https://api.opencagedata.com/geocode/v1/json?q=${encodeURIComponent(city)}&key=${geocodingApiKey}`;
+
+    try {
+        const geoResponse = await fetch(geocodingUrl);
+        const geoData = await geoResponse.json();
+
+        if (geoData.results.length === 0) {
+            throw new Error('City not found.');
+        }
+
+        const { lat, lng } = geoData.results[0].geometry;
+
+        const timezoneUrl = `http://api.timezonedb.com/v2.1/get-time-zone?key=${timezoneApiKey}&format=json&by=position&lat=${lat}&lng=${lng}`;
+        const tzResponse = await fetch(timezoneUrl);
+        const tzData = await tzResponse.json();
+
+        if (tzData.status !== 'OK') {
+            throw new Error(tzData.message);
+        }
+
+        const cityTime = new Date(tzData.formatted);
+        const timeString = cityTime.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true }); // Add AM/PM format
+        document.querySelector('.city-time').innerHTML = `${timeString}`;
+    } catch (error) {
+        console.error('Error fetching time:', error.message);
+    }
 }
+
+
 
 
 function datesAreEqual(jasonDate, today){
@@ -314,16 +352,29 @@ weatherHourForecast.addEventListener('click', (e) => {
                     if(time > 12)
                     { 
                         time = (time - 12)+' PM'
-                    }
-                    else{
-                        time = (time)+' AM'
+                    }else{
+                        if (time == 12)
+                            time = 12 +' PM'
+                        else if(time == 0)
+                            time = 12 +' AM'
+                        else
+                            time = (time)+' AM'
+                        
+                        if(time == 0)
+                            time = 12 +' AM'
                     }
                     if(secondTime > 12)
                     {
-                        secondTime = (secondTime - 12)+' PM'
+                        if (secondTime == 24)
+                            secondTime = 12 +' AM'
+                        else
+                            secondTime = (secondTime - 12)+' PM'
                     }
                     else{
-                       secondTime = (secondTime)+' AM'
+                        if (secondTime == 12)
+                            secondTime = 12 +' PM'
+                        else
+                        secondTime = (secondTime)+' AM'
                     }
 
                     newDiv.innerHTML = `
@@ -342,47 +393,55 @@ weatherHourForecast.addEventListener('click', (e) => {
 });
 
 
+ 
  // Function to get the user's location (latitude and longitude)
-function getLocation() {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(showPosition);
-        } 
-    }
+ function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } 
+}
 
-    // Function to handle success in retrieving location
-    function showPosition(position) {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-        const coords = `${latitude}, ${longitude}`;
+// Function to handle success in retrieving location
+function showPosition(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    const coords = `${latitude}, ${longitude}`;
 
+    // Log coordinates to console for debugging
+    console.log('Coordinates:', coords);
 
-        // Now, we will use a reverse geocoding API to convert coordinates into a city name
-        reverseGeocode(latitude, longitude);
-    }
-
-    
-    // Function to reverse geocode the latitude and longitude to get city name
-    function reverseGeocode(latitude, longitude) {
-        const apiKey = '13c78181b46141b49f68d6e4fcf4385c'; // Replace with your geocoding API key (OpenCage, Google Maps, etc.)
-        const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}&language=en&pretty=1`;
+    // Now, we will use a reverse geocoding API to convert coordinates into a city name
+    reverseGeocode(latitude, longitude);
+}
 
 
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
+// Function to reverse geocode the latitude and longitude to get city name
+function reverseGeocode(latitude, longitude) {
+    const apiKey = '13c78181b46141b49f68d6e4fcf4385c'; // Replace with your geocoding API key (OpenCage, Google Maps, etc.)
+    const url = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}&language=en&pretty=1`;
 
-                if (data.results && data.results[0]) {
-                    const city = data.results[0].components.city ;
-                    getCityWeather(city)
-                    
-                } 
-            })
-            .catch(error => {
-                console.error('Error in reverse geocoding:', error);
-            });
-    }
+    // Log URL for debugging
+    console.log('Request URL:', url);
 
-    // Call getLocation function when the page loads
-    window.onload = function() {
-        getLocation();
+    fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            // Log the entire response to the console
+            console.log('Geocoding Response:', data);
+
+            if (data.results && data.results[0]) {
+                const city = data.results[0].components.city ;
+                getCityWeather(city)
+            } 
+        })
+        .catch(error => {
+            console.error('Error in reverse geocoding:', error);
+            document.getElementById("location").innerHTML = "Error retrieving location data.";
+            getCityWeather('Pune')
+        });
+}
+
+// Call getLocation function when the page loads
+window.onload = function() {
+    getLocation();
     }
