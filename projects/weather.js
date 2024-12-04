@@ -8,6 +8,7 @@ inputValue.addEventListener('change',(event) => {
 
     getCityWeather(city)
 })
+
 let weatherCity 
 function getCityWeather(city = 'Pune'){
     weatherCity = city
@@ -28,7 +29,7 @@ function getCityWeather(city = 'Pune'){
             document.querySelector('.windHumidity').innerHTML = `Humidity: ${data.list[0].main.humidity}% | Wind Speed: ${wind} km/h`
             
             setInterval(() => {
-                getCityTime(weatherCity)
+                getCityTime(city)
             },1000)
             
 
@@ -147,7 +148,7 @@ function getCityWeather(city = 'Pune'){
     .catch(error => {
         console.log('Error:');
     });
-            
+        
 }
 
 async function getCityTime(city) {
@@ -395,7 +396,10 @@ weatherHourForecast.addEventListener('click', (e) => {
  function getLocation() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(showPosition);
-    } 
+    } else {
+        console.error('Geolocation is not supported by this browser.');
+        getCityWeather('Pune'); // Default to Pune if geolocation fails
+    }
 }
 
 // Function to handle success in retrieving location
@@ -427,9 +431,12 @@ function reverseGeocode(latitude, longitude) {
             console.log('Geocoding Response:', data);
 
             if (data.results && data.results[0]) {
-                const city = data.results[0].components.city ;
-                getCityWeather(city)
-            } 
+                const city = data.results[0].components.city || 'Pune'; // Fallback to Pune if city is not found
+                getCityWeather(city);
+            } else {
+                console.error('No results from geocoding. Defaulting to Pune.');
+                getCityWeather('Pune');
+            }
         })
         .catch(error => {
             console.error('Error in reverse geocoding:', error);
