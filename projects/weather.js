@@ -28,7 +28,7 @@ function getCityWeather(city = 'Pune'){
             document.querySelector('.windHumidity').innerHTML = `Humidity: ${data.list[0].main.humidity}% | Wind Speed: ${wind} km/h`
             
             setInterval(() => {
-                getCityTime(city)
+                getCityTime(weatherCity)
             },1000)
             
 
