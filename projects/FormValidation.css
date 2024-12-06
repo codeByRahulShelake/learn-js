@@ -11,7 +11,8 @@ body {
 
 .form-container {
     background-color: white;
-    padding: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
@@ -130,4 +131,37 @@ a:hover {
     font-size: 0.9em;
     margin-top: 5px;
     display: none; /* Initially hide error messages */
+}
+
+
+
+/* table for form data */
+table {
+    width: 60%;
+    margin: 20px auto;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    text-align: left;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+    cursor: pointer;
 }
