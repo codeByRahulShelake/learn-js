@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+    <link rel="stylesheet" href="FormValidation.css">
+</head>
+<body>
+
+    <div class="form-container">
+        <h1>Register Now</h1>
+        <form method="post">
+            <!-- Full Name -->
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="nameInput" name="name" placeholder="Enter your name" required>
+            </div>
+
+            <!-- Email -->
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="emailInput" name="email" placeholder="Enter your email" required>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="passwordInput" name="password" placeholder="Enter your password" required>
+            </div>
+
+            <!--Confirm  Password -->
+            <div class="form-group">
+                <label for="password">Confirm Password</label>
+                <input type="password" id="confirmPasswordInput" name="confirmPassword" placeholder="Re-enter your password to confirm" required>
+            </div>
+
+            <!-- Phone -->
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phoneInput" name="phone" placeholder="Enter your phone no" required>
+            </div>
+
+            <!-- Gender -->
+            <div class="form-group">
+                <label>Gender</label>
+                <div class="radio-group">
+                    <input type="radio" id="male" name="gender" value="male" required>
+                    <label for="male">Male</label>
+                    <input type="radio" id="female" name="gender" value="female">
+                    <label for="female">Female</label>
+                    <input type="radio" id="other" name="gender" value="other">
+                    <label for="other">Other</label>
+                </div>
+            </div>
+
+            <!-- Country Search -->
+            <div class="form-group">
+                <label for="country">Country</label>
+                <div class="dropdown">
+                    <input type="text" id="countrySearch" placeholder="Select your country" autocomplete="off" required/>
+                    <ul id="countryList" class="dropdown-list"></ul>
+                </div>
+            </div>
+
+            <!-- Terms and Conditions -->
+            <div class="terms-div">
+                <input type="checkbox" id="terms" name="terms" required>
+                <label for="terms">I agree to the <a href="#">terms and conditions</a>.</label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="btn-submit">Submit</button>
+        </form>
+    </div>
+
+    <script src="form.js">    </script>
+
+</body>
+</html>
