@@ -6,7 +6,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh; 
 }
 
 .form-container {
@@ -122,4 +122,12 @@ a:hover {
 
 .dropdown-list li:hover {
     background-color: #f0f0f0;
+}
+
+/* validation error */
+.error-message {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+    display: none; /* Initially hide error messages */
 }
